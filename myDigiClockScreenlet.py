@@ -7,7 +7,8 @@
 # the terms and conditions of this license. 
 # Thank you for using free software!
 
-#  myDigiClockScreenlet (c) Whise 2007 
+#  DigiClockScreenlet (c) Whise 2007
+#  cdslClockScreenlet Nievous 2010
 
 import screenlets
 from screenlets.options import ColorOption , BoolOption, FontOption
@@ -19,13 +20,14 @@ import gtk
 import cairo
 import gconf
 
-class myDigiClockScreenlet(screenlets.Screenlet):
-	"""Digital clock"""
+class cdslClockScreenlet(screenlets.Screenlet):
+	"""cdsl Digital clock, simple mod based on
+	DigitalClockScreenlet by Helder Fraga aka Whise"""
 	
 	# default meta-info for Screenlets (should be removed and put into metainfo)
-	__name__	= 'myDigiClockScreenlet'
+	__name__	= 'cdslClockScreenlet'
 	__version__	= '0.1'
-	__author__	= 'Helder Fraga aka Whise'
+	__author__	= 'Daniel Mondaca aka Nievous'
 	__desc__	= __doc__	# set description to docstring of class
 	
 	# editable options (options that are editable through the UI)
@@ -41,10 +43,11 @@ class myDigiClockScreenlet(screenlets.Screenlet):
 	def __init__ (self, **keyword_args):
 		#call super (width/height MUST match the size of graphics in the theme)
 		screenlets.Screenlet.__init__(self, width=150, height=70, 
-			uses_theme=True,ask_on_option_override=False, **keyword_args)
+			uses_theme=True, **keyword_args)
+			#uses_theme=True,ask_on_option_override=False, **keyword_args)
 		# set theme
 		
-		#self.theme_name = "default"
+		self.theme_name = "default"
 		# add option group
 		self.add_options_group('Options', 'Options')
 
@@ -235,6 +238,8 @@ class myDigiClockScreenlet(screenlets.Screenlet):
 				self.pm=False
 			self.draw_text(ctx, self.time, 0, 20, self.font.split(' ')[0], 21, self.width, pango.ALIGN_CENTER)
 			self.draw_text(ctx, b, -8, 36, self.font.split(' ')[0], 6, self.width, pango.ALIGN_RIGHT)
+		if self.theme:
+			self.theme.render(ctx, 'logo2')
 		ctx.set_source_rgba(self.color_text[0],self.color_text[0],self.color_text[0],0.05)
 		self.draw_text(ctx, '88:88:88', 0, 31, self.font.split(' ')[0], 9, self.width, pango.ALIGN_CENTER)
 		ctx.set_source_rgba(*self.color_text)
@@ -249,5 +254,5 @@ class myDigiClockScreenlet(screenlets.Screenlet):
 if __name__ == "__main__":
 	# create new session
 	import screenlets.session
-	screenlets.session.create_session(myDigiClockScreenlet)
+	screenlets.session.create_session(cdslClockScreenlet)
 
