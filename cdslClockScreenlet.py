@@ -212,7 +212,7 @@ class cdslClockScreenlet(screenlets.Screenlet):
 		self.draw_rectangle_advanced (ctx, 0, 0, self.width-12, self.height-12, rounded_angles=(5,5,5,5), fill=True, border_size=2, border_color=(0,0,0,0.5), shadow_size=6, shadow_color=(0,0,0,0.5))
 		ctx.set_source_rgba(self.color_text[0],self.color_text[0],self.color_text[0],0.05)
 		if self.theme:
-			self.theme.render(ctx, 'logo2')
+			self.theme.render(ctx, 'logo')
 		self.draw_text(ctx,'88:88:88', 0, 20, self.font.split(' ')[0], 21, self.width, pango.ALIGN_CENTER)
 		ctx.set_source_rgba(*self.color_text)
 
