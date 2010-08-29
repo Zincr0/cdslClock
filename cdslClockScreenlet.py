@@ -39,6 +39,8 @@ class cdslClockScreenlet(screenlets.Screenlet):
 	date = ''
 	font= "FreeSans"
 	use_ampm = False
+	scale = 0.7
+	opacity= 0.8
 	# constructor
 	def __init__ (self, **keyword_args):
 		#call super (width/height MUST match the size of graphics in the theme)
@@ -148,8 +150,6 @@ class cdslClockScreenlet(screenlets.Screenlet):
 
 	def on_key_down(self, keycode, keyvalue, event):
 		"""Called when a keypress-event occured in Screenlet's window."""
-
-		
 		pass
 	
 	def on_load_theme (self):
@@ -158,15 +158,11 @@ class cdslClockScreenlet(screenlets.Screenlet):
 	
 	def on_menuitem_select (self, id):
 		"""Called when a menuitem is selected."""
-		
 		pass
 	
 
-
-
 	def on_mouse_move(self, event):
 		"""Called when the mouse moves in the Screenlet's window."""
-
 		pass
 
 	def on_mouse_up (self, event):
@@ -174,7 +170,6 @@ class cdslClockScreenlet(screenlets.Screenlet):
 		Returning True causes the event to be not further propagated."""
 		return False
 	
-
 		
 	def on_realize (self):
 		""""Callback for handling the realize-event."""
@@ -216,15 +211,15 @@ class cdslClockScreenlet(screenlets.Screenlet):
 			ctx.set_source(self.frame_color)
 		self.draw_rectangle_advanced (ctx, 0, 0, self.width-12, self.height-12, rounded_angles=(5,5,5,5), fill=True, border_size=2, border_color=(0,0,0,0.5), shadow_size=6, shadow_color=(0,0,0,0.5))
 		ctx.set_source_rgba(self.color_text[0],self.color_text[0],self.color_text[0],0.05)
+		if self.theme:
+			self.theme.render(ctx, 'logo2')
 		self.draw_text(ctx,'88:88:88', 0, 20, self.font.split(' ')[0], 21, self.width, pango.ALIGN_CENTER)
 		ctx.set_source_rgba(*self.color_text)
 
 		if not self.use_ampm:
 			#Draw time (hour)
 			self.draw_text(ctx, self.time, 0, 1, self.font.split(' ')[0], 25, self.width, pango.ALIGN_CENTER)
-
 		else:
-
 			b = sensors.cal_get_ampm()
 			if b == '':
 				h = sensors.cal_get_hour ()
@@ -238,13 +233,12 @@ class cdslClockScreenlet(screenlets.Screenlet):
 				self.pm=False
 			self.draw_text(ctx, self.time, 0, 20, self.font.split(' ')[0], 21, self.width, pango.ALIGN_CENTER)
 			self.draw_text(ctx, b, -8, 36, self.font.split(' ')[0], 6, self.width, pango.ALIGN_RIGHT)
-		if self.theme:
-			self.theme.render(ctx, 'logo2')
 		ctx.set_source_rgba(self.color_text[0],self.color_text[0],self.color_text[0],0.05)
 		self.draw_text(ctx, '88:88:88', 0, 31, self.font.split(' ')[0], 9, self.width, pango.ALIGN_CENTER)
 		ctx.set_source_rgba(*self.color_text)
 		#Draws Date
-		self.draw_text(ctx, self.date, 0, 31, self.font.split(' ')[0], 20, self.width, pango.ALIGN_CENTER)		
+		self.draw_text(ctx, self.date, 0, 31, self.font.split(' ')[0], 20, self.width, pango.ALIGN_CENTER)
+		self.opacity=self.opacity
 
 	def on_draw_shape (self, ctx):
 		self.on_draw(ctx)
